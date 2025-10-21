@@ -33,7 +33,7 @@ public class Database {
         //Controllo che il database sia ancora collegato (va fatto per ogni metodo che fa richeista a database).
         try
         {
-            if (connection != null && connection.isValid(5))
+            if (connection != null || !connection.isValid(5))
             {
                 System.err.println("Connection is null or invalid");
                 
@@ -68,4 +68,42 @@ public class Database {
 
         return result;
 	}
+
+    public boolean insert(String piatto, double prezzo, int quantita)
+    {
+        try
+        {
+            if (connection != null || !connection.isValid(5))
+            {
+                System.err.println("Connection is null or invalid");
+                
+                return true;
+            }
+        } 
+        catch (SQLException e)
+        {
+            System.err.println("Connection is null or invalid: " + e);
+            
+            return false;
+        }
+
+        //String query = "INSERT INTO menu(piatto, prezzo, quantita) VALUES ('" + piatto +", " + prezzo +", " + quantita+ "')"; //? = Placeholder per i valori. Qua si può fare un sql injection, ovvero che un utente può droppare la tabella; attenzione! Per questo usiamo i placeholders.
+        String query = "INSERT INTO menu(piatto, prezzo, quantita) VALUES (?, ?, ?)";   
+        try
+        {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, piatto); //Da qui in poi per evitare il sql injection (mette il carattere di escape).
+            statement.setDouble(2, prezzo);
+            statement.setInt(3, quantita);
+            statement.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Error in query: " + query + e);
+
+            return false;
+        }
+
+        return true;
+    }
 }

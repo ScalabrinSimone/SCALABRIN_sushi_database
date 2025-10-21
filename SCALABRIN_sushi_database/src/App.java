@@ -13,6 +13,7 @@ public class App {
             System.exit(-1);
         }
 
+        db.insert("Nigiri salmone", 3, 2);
         System.out.println(db.selectAll());
     }
 }
