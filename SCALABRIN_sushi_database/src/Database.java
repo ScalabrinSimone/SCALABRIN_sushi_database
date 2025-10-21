@@ -9,7 +9,7 @@ public class Database {
 
     public Database() throws Exception
     {
-        String url = "database/sushi.db";
+        String url = "jdbc:sqlite:database/sushi.db";
         connection = DriverManager.getConnection(url);
         System.out.println("Connsesso al database");
     }

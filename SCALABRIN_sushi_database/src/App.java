@@ -3,6 +3,7 @@ public class App {
         try
         {
             Database db = Database.getInstance(); //Pattern singleton.
+            
         }
         catch(Exception e)
         {
