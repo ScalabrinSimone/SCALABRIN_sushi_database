@@ -2,7 +2,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         try
         {
-            Database db = new Database();
+            Database db = Database.getInstance();
         }
         catch(Exception e)
         {
